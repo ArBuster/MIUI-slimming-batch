@@ -37,10 +37,11 @@ def adb_get_device_info() -> str:
                     rom_version = match.group(1).upper()
                     if rom_version in device_model[model]["rom_version"]:
                         packages_path = "./" + device_model[model]["path"] + "/" + device_model[model]["rom_version"][rom_version] + "/"
+                        print("设备型号: %s\nrom 版本: %s\n" % (model, rom_version))
                     else:
-                        print("此设备的rom版本不支持瘦身. rom版本: %s" % rom_version)
+                        print("此设备的rom版本缺少要裁减的软件包列表. rom版本: %s" % rom_version)
             else:
-                print("此设备型号不支持瘦身. 型号: %s" % model)
+                print("此设备型号缺少要裁减的软件包列表. 型号: %s" % model)
     else:
         print(ps_ret.stdout)
 
@@ -48,12 +49,12 @@ def adb_get_device_info() -> str:
 
 
 def load_package_list(package_path:str) -> tuple:
-    disable_apps, uninstall_apps = list(), list()
+    disable_apps, uninstall_apps = tuple(), tuple()
     with open(package_path + "disable", "r") as f:
-        disable_apps = [line[:-1].lower() for line in f.readlines() if line[:-1]]
+        disable_apps = tuple(line[:-1].lower() for line in f.readlines() if line[:-1])
 
     with open(package_path + "uninstall", "r") as f:
-        uninstall_apps = [line[:-1].lower() for line in f.readlines() if line[:-1]]
+        uninstall_apps = tuple(line[:-1].lower() for line in f.readlines() if line[:-1])
 
     return disable_apps, uninstall_apps
 
