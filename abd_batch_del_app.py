@@ -36,7 +36,7 @@ def adb_get_device_info() -> str:
                 if match:
                     rom_version = match.group(1).upper()
                     if rom_version in device_model[model]["rom_version"]:
-                        packages_path = "./" + device_model[model]["path"] + "/" + device_model[model]["rom_version"][rom_version] + "/"
+                        packages_path = "./trim/" + device_model[model]["path"] + "/" + device_model[model]["rom_version"][rom_version] + "/"
                         print("设备型号: %s\nrom 版本: %s\n" % (model, rom_version))
                     else:
                         print("此设备的rom版本缺少要裁减的软件包列表. rom版本: %s" % rom_version)
