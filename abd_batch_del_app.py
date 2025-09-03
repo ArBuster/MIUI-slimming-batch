@@ -11,6 +11,13 @@ device_model = {
             # rom_version: package_path
             "V14.0.10.0.TLHCNXM": "V14.0.10.0.TLHCNXM"
         }
+    },
+    "MI 10 PRO": {
+        "path": "Mi 10 Pro",
+        "rom_version": {
+            # MIUI by xiaomi.eu
+            "V14.0.4.0.TJACNXM": "V14.0.4.0.TJACNXM"
+        }
     }
 }
 
@@ -28,7 +35,7 @@ def adb_get_device_info() -> str:
     packages_path = None
     if ps_ret.returncode == 0:
         cmd_output = normalize_cmd_output(ps_ret.stdout).lower()
-        match = re.search(R"\[ro.product.model\]:\s*\[([\d\w]+)\]", cmd_output)
+        match = re.search(R"\[ro.product.model\]:\s*\[([\s\w]+)\]", cmd_output)
         if match:
             model = match.group(1).upper()
             if model in device_model:
@@ -40,8 +47,12 @@ def adb_get_device_info() -> str:
                         print("设备型号: %s\nrom 版本: %s\n" % (model, rom_version))
                     else:
                         print("此设备的rom版本缺少要裁减的软件包列表. rom版本: %s" % rom_version)
+                else:
+                    print("未找到ro.system.build.version.incremental")
             else:
                 print("此设备型号缺少要裁减的软件包列表. 型号: %s" % model)
+        else:
+            print("未找到ro.product.model")
     else:
         print(ps_ret.stdout)
 
