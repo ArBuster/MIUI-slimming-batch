@@ -62,10 +62,10 @@ def adb_get_device_info() -> str:
 def load_package_list(package_path:str) -> tuple:
     disable_apps, uninstall_apps = tuple(), tuple()
     with open(package_path + "disable", "r") as f:
-        disable_apps = tuple(line[:-1].lower() for line in f.readlines() if line[:-1])
+        disable_apps = tuple(line[:-1] for line in f.readlines() if line[:-1])
 
     with open(package_path + "uninstall", "r") as f:
-        uninstall_apps = tuple(line[:-1].lower() for line in f.readlines() if line[:-1])
+        uninstall_apps = tuple(line[:-1] for line in f.readlines() if line[:-1])
 
     return disable_apps, uninstall_apps
 
@@ -97,7 +97,7 @@ def adb_list_packages(user_id:str) -> tuple:
     print("执行命令: %s, 返回值: %d" % (cmd , ps_ret.returncode))
 
     if ps_ret.stdout:
-        package_list = normalize_cmd_output(ps_ret.stdout).lower().split('\n')
+        package_list = normalize_cmd_output(ps_ret.stdout).split('\n')
         for i in range(0, len(package_list)):
             package_list[i] = package_list[i][8:]
     else:
