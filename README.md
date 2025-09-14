@@ -33,7 +33,7 @@ https://archive.ph/R3T2S
   
   
 部分包其它机型其它系统卸载后可能存在问题：  
-miui安全组件（内置腾讯天御库，会上传应用列表）：com.miui.guardprovider  
+miui安全组件（内置腾讯天御库，会上传应用列表。删除后无法根据标记拦截来电）：com.miui.guardprovider  
 系统服务组件（儿童空间，游戏加速）：com.miui.securityadd  
   
   
